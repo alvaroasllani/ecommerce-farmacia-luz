@@ -1,77 +1,173 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { mockProducts } from '../data/mockData';
 import ProductCard from '../components/ProductCard';
+import ProductModal from '../components/ProductModal';
+import { Product } from '../types';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { ShoppingCart, Package, Users, BarChart } from 'lucide-react';
+import { ShoppingCart, Package, Users, BarChart, Shield, Clock, MapPin, Phone } from 'lucide-react';
 
 const Home: React.FC = () => {
   const { user } = useAuth();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const featuredProducts = mockProducts.slice(0, 4);
 
-  const handleViewDetails = (product: any) => {
-    // Navigate to product details - to be implemented
-    console.log('Ver detalles del producto:', product);
+  const handleViewDetails = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
   };
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pharma-blue to-pharma-blue-dark">
-        <div className="container mx-auto px-4 py-16">
-          <div className="text-center text-white mb-16">
-            <h1 className="text-5xl font-bold mb-6">Bienvenido a FarmaPlus</h1>
-            <p className="text-xl mb-8 opacity-90">
-              Tu farmacia de confianza con más de 10,000 productos farmacéuticos
-            </p>
-            <div className="flex justify-center space-x-4">
-              <Link to="/login">
-                <Button className="bg-white text-pharma-blue hover:bg-gray-100 px-8 py-3 text-lg">
-                  Iniciar Sesión
-                </Button>
-              </Link>
-              <Link to="/register">
-                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-pharma-blue px-8 py-3 text-lg">
-                  Registrarse
-                </Button>
-              </Link>
+      <div className="min-h-screen">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-br from-pharma-blue via-pharma-blue-dark to-blue-900 text-white">
+          <div className="container mx-auto px-4 py-20">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="mb-8">
+                <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                  Farmacia LUZ
+                </h1>
+                <div className="w-24 h-1 bg-pharma-green mx-auto mb-6"></div>
+                <p className="text-xl mb-8 opacity-90 leading-relaxed">
+                  Tu farmacia de confianza con más de 15 años de experiencia y 
+                  <span className="font-semibold text-pharma-green"> más de 10,000 productos farmacéuticos</span>
+                </p>
+              </div>
+              
+              <div className="flex justify-center space-x-6 mb-12">
+                <Link to="/login">
+                  <Button className="bg-white text-pharma-blue hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full transform hover:scale-105 transition-all shadow-lg">
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-pharma-blue px-8 py-4 text-lg font-semibold rounded-full transform hover:scale-105 transition-all">
+                    Registrarse Gratis
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-pharma-green">15+</div>
+                  <div className="text-sm opacity-80">Años de experiencia</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-pharma-green">10K+</div>
+                  <div className="text-sm opacity-80">Productos disponibles</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-pharma-green">24/7</div>
+                  <div className="text-sm opacity-80">Atención online</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-pharma-green">5000+</div>
+                  <div className="text-sm opacity-80">Clientes satisfechos</div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <Package className="w-12 h-12 text-pharma-blue mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Amplio Catálogo</h3>
-                <p className="text-gray-600">Más de 10,000 productos farmacéuticos disponibles</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <ShoppingCart className="w-12 h-12 text-pharma-green mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Compra Fácil</h3>
-                <p className="text-gray-600">Sistema de carrito intuitivo y proceso de compra rápido</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <Users className="w-12 h-12 text-pharma-blue mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Atención Profesional</h3>
-                <p className="text-gray-600">Personal farmacéutico capacitado a tu servicio</p>
-              </CardContent>
-            </Card>
+        {/* Features Section */}
+        <div className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-pharma-blue mb-4">¿Por qué elegir Farmacia LUZ?</h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Nos comprometemos a brindarte la mejor atención farmacéutica con productos de calidad y servicio excepcional
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-pharma-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Package className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-pharma-blue">Amplio Catálogo</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Más de 10,000 productos farmacéuticos, medicamentos genéricos, vitaminas y productos de cuidado personal
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-pharma-green rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-pharma-blue">Productos Certificados</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Todos nuestros medicamentos cuentan con registro sanitario y garantía de calidad farmacéutica
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-pharma-green rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Clock className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-pharma-blue">Atención 24/7</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Servicio de consultas online las 24 horas y entregas rápidas en toda la ciudad
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Contact Info */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <div className="grid md:grid-cols-3 gap-8 text-center">
+                <div className="flex items-center justify-center space-x-3">
+                  <MapPin className="w-6 h-6 text-pharma-blue" />
+                  <div>
+                    <p className="font-semibold text-pharma-blue">Ubicación</p>
+                    <p className="text-gray-600">Av. Principal, Centro de la Ciudad</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center space-x-3">
+                  <Phone className="w-6 h-6 text-pharma-blue" />
+                  <div>
+                    <p className="font-semibold text-pharma-blue">Teléfono</p>
+                    <p className="text-gray-600">+58 414-123-4567</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center space-x-3">
+                  <Clock className="w-6 h-6 text-pharma-blue" />
+                  <div>
+                    <p className="font-semibold text-pharma-blue">Horarios</p>
+                    <p className="text-gray-600">Lun - Dom: 6:00 AM - 10:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className="bg-white rounded-lg p-8">
-            <h2 className="text-3xl font-bold text-center mb-8 text-pharma-blue">
-              Productos Destacados
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Featured Products */}
+        <div className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-pharma-blue mb-4">Productos Destacados</h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Descubre algunos de nuestros medicamentos más solicitados y productos de mayor calidad
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {featuredProducts.map(product => (
                 <ProductCard 
                   key={product.id} 
@@ -80,8 +176,38 @@ const Home: React.FC = () => {
                 />
               ))}
             </div>
+            
+            <div className="text-center">
+              <Link to="/register">
+                <Button className="bg-pharma-blue hover:bg-pharma-blue-dark px-8 py-4 text-lg font-semibold rounded-full">
+                  Ver Todos los Productos
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
+
+        {/* CTA Section */}
+        <div className="bg-gradient-to-r from-pharma-green to-green-600 py-16">
+          <div className="container mx-auto px-4 text-center text-white">
+            <h2 className="text-3xl font-bold mb-4">¡Únete a nuestra familia de clientes!</h2>
+            <p className="text-xl mb-8 opacity-90">
+              Regístrate hoy y obtén descuentos exclusivos en tu primera compra
+            </p>
+            <Link to="/register">
+              <Button className="bg-white text-pharma-green hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full transform hover:scale-105 transition-all">
+                Registrarse Ahora
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Product Modal */}
+        <ProductModal
+          product={selectedProduct}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
       </div>
     );
   }
@@ -305,9 +431,11 @@ const Home: React.FC = () => {
             <ShoppingCart className="w-12 h-12 text-pharma-green mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Ofertas Especiales</h3>
             <p className="text-gray-600 mb-4">Descuentos hasta 30% en productos seleccionados</p>
-            <Button className="bg-pharma-green hover:bg-pharma-green-dark">
-              Ver Ofertas
-            </Button>
+            <Link to="/offers">
+              <Button className="bg-pharma-green hover:bg-pharma-green-dark">
+                Ver Ofertas
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 
@@ -316,9 +444,11 @@ const Home: React.FC = () => {
             <Users className="w-12 h-12 text-pharma-blue mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Consulta Farmacéutica</h3>
             <p className="text-gray-600 mb-4">Recibe asesoría profesional</p>
-            <Button variant="outline" className="border-pharma-blue text-pharma-blue hover:bg-pharma-blue hover:text-white">
-              Contactar
-            </Button>
+            <Link to="/contact">
+              <Button variant="outline" className="border-pharma-blue text-pharma-blue hover:bg-pharma-blue hover:text-white">
+                Contactar
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       </div>
@@ -335,6 +465,13 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Product Modal */}
+      <ProductModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };

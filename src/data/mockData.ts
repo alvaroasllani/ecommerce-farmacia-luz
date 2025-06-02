@@ -1,4 +1,3 @@
-
 import { Product, Order, User } from '../types';
 
 export const mockProducts: Product[] = [
@@ -87,6 +86,48 @@ export const mockOrders: Order[] = [
   },
   {
     id: 'ORD-002',
+    clientId: '1',
+    clientName: 'Juan Pérez',
+    items: [
+      { product: mockProducts[3], quantity: 2 },
+      { product: mockProducts[4], quantity: 1 }
+    ],
+    total: 83.80,
+    status: 'pagado',
+    paymentMethod: 'Efectivo',
+    deliveryAddress: 'Av. Principal 123, Caracas',
+    createdAt: new Date('2024-01-20')
+  },
+  {
+    id: 'ORD-003',
+    clientId: '1',
+    clientName: 'Juan Pérez',
+    items: [
+      { product: mockProducts[2], quantity: 1 },
+      { product: mockProducts[5], quantity: 2 }
+    ],
+    total: 76.00,
+    status: 'pendiente',
+    paymentMethod: 'Transferencia',
+    deliveryAddress: 'Av. Principal 123, Caracas',
+    createdAt: new Date('2024-01-22')
+  },
+  {
+    id: 'ORD-004',
+    clientId: '1',
+    clientName: 'Juan Pérez',
+    items: [
+      { product: mockProducts[0], quantity: 1 },
+      { product: mockProducts[4], quantity: 2 }
+    ],
+    total: 76.50,
+    status: 'entregado',
+    paymentMethod: 'Tarjeta de débito',
+    deliveryAddress: 'Av. Principal 123, Caracas',
+    createdAt: new Date('2024-01-10')
+  },
+  {
+    id: 'ORD-005',
     clientId: '2',
     clientName: 'María González',
     items: [
@@ -100,7 +141,7 @@ export const mockOrders: Order[] = [
     createdAt: new Date('2024-01-20')
   },
   {
-    id: 'ORD-003',
+    id: 'ORD-006',
     clientId: '3',
     clientName: 'Carlos Rodríguez',
     items: [
