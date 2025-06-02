@@ -2,7 +2,18 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
-import { ShoppingCart, User, LogOut, Package, Star, UserCircle, ShoppingBag, Percent, MessageCircle } from 'lucide-react';
+import { 
+  ShoppingCart, 
+  User, 
+  LogOut, 
+  Package, 
+  Star, 
+  UserCircle, 
+  ShoppingBag, 
+  Percent, 
+  MessageCircle,
+  Home
+} from 'lucide-react';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 
@@ -20,31 +31,8 @@ const Header: React.FC = () => {
     switch (user?.role) {
       case 'cliente':
         return (
-          <div className="flex items-center space-x-2">
-            <Link 
-              to="/products" 
-              className="hidden md:flex items-center text-white hover:text-pharma-green transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
-            >
-              <Package size={18} className="mr-2" />
-              <span className="font-medium">Productos</span>
-            </Link>
-            
-            <Link 
-              to="/offers" 
-              className="hidden md:flex items-center text-white hover:text-pharma-green transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
-            >
-              <Percent size={18} className="mr-2" />
-              <span className="font-medium">Ofertas</span>
-            </Link>
-            
-            <Link 
-              to="/orders" 
-              className="hidden md:flex items-center text-white hover:text-pharma-green transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
-            >
-              <ShoppingBag size={18} className="mr-2" />
-              <span className="font-medium">Mis Pedidos</span>
-            </Link>
-            
+          <div className="flex items-center space-x-3">
+            {/* Cart with badge */}
             <Link 
               to="/cart" 
               className="relative p-2 text-white hover:text-pharma-green transition-colors rounded-lg hover:bg-white/10"
@@ -57,6 +45,7 @@ const Header: React.FC = () => {
               )}
             </Link>
             
+            {/* User Profile */}
             <Link 
               to="/profile" 
               className="flex items-center space-x-2 text-white hover:text-pharma-green transition-colors p-2 rounded-lg hover:bg-white/10"
@@ -64,19 +53,20 @@ const Header: React.FC = () => {
               <div className="w-8 h-8 bg-pharma-green rounded-full flex items-center justify-center">
                 <User size={18} />
               </div>
-              <div className="hidden md:block">
+              <div className="hidden xl:block">
                 <div className="text-sm font-medium">{user.name}</div>
                 <div className="text-xs opacity-75">Cliente</div>
               </div>
             </Link>
             
+            {/* Logout */}
             <Button 
               onClick={handleLogout}
               size="sm"
               className="bg-red-500 hover:bg-red-600 text-white border-0 shadow-md"
             >
-              <LogOut size={16} className="mr-2" />
-              <span className="hidden md:inline">Salir</span>
+              <LogOut size={16} className="mr-1" />
+              <span className="hidden lg:inline">Salir</span>
             </Button>
           </div>
         );
@@ -107,15 +97,6 @@ const Header: React.FC = () => {
       default:
         return (
           <div className="flex items-center space-x-3">
-            <Link to="/contact">
-              <Button 
-                variant="ghost" 
-                className="text-white hover:text-pharma-blue hover:bg-white font-medium shadow-md hover:shadow-lg transition-all"
-              >
-                <MessageCircle size={16} className="mr-2" />
-                Contacto
-              </Button>
-            </Link>
             <Link to="/login">
               <Button 
                 className="bg-white text-pharma-blue hover:bg-gray-100 font-medium shadow-md hover:shadow-lg transition-all"
@@ -225,78 +206,64 @@ const Header: React.FC = () => {
         </div>
       </div>
       
-      {/* Mobile Navigation */}
-      {user?.role === 'cliente' && (
-        <div className="lg:hidden border-t border-white/10">
-          <div className="container mx-auto px-4 py-2">
-            <nav className="flex items-center justify-center space-x-6">
-              <Link 
-                to="/" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Inicio
-              </Link>
-              <Link 
-                to="/products" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Productos
-              </Link>
-              <Link 
-                to="/offers" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Ofertas
-              </Link>
-              <Link 
-                to="/orders" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Pedidos
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Contacto
-              </Link>
-            </nav>
-          </div>
+      {/* Mobile Navigation - Consolidated */}
+      <div className="lg:hidden border-t border-white/10">
+        <div className="container mx-auto px-4 py-3">
+          <nav className="flex items-center justify-around">
+            <Link 
+              to="/" 
+              className="flex flex-col items-center text-white/80 hover:text-white transition-colors text-xs font-medium"
+            >
+              <Home size={20} />
+              <span className="mt-1">Inicio</span>
+            </Link>
+            <Link 
+              to="/products" 
+              className="flex flex-col items-center text-white/80 hover:text-white transition-colors text-xs font-medium"
+            >
+              <Package size={20} />
+              <span className="mt-1">Productos</span>
+            </Link>
+            <Link 
+              to="/offers" 
+              className="flex flex-col items-center text-white/80 hover:text-white transition-colors text-xs font-medium"
+            >
+              <Percent size={20} />
+              <span className="mt-1">Ofertas</span>
+            </Link>
+            {user?.role === 'cliente' && (
+              <>
+                <Link 
+                  to="/orders" 
+                  className="flex flex-col items-center text-white/80 hover:text-white transition-colors text-xs font-medium"
+                >
+                  <ShoppingBag size={20} />
+                  <span className="mt-1">Pedidos</span>
+                </Link>
+                <Link 
+                  to="/cart" 
+                  className="flex flex-col items-center text-white/80 hover:text-white transition-colors text-xs font-medium relative"
+                >
+                  <ShoppingCart size={20} />
+                  {getTotalItems() > 0 && (
+                    <Badge className="absolute -top-1 -right-1 bg-pharma-green text-white text-xs h-5 w-5 flex items-center justify-center p-0 border border-white">
+                      {getTotalItems()}
+                    </Badge>
+                  )}
+                  <span className="mt-1">Carrito</span>
+                </Link>
+              </>
+            )}
+            <Link 
+              to="/contact" 
+              className="flex flex-col items-center text-white/80 hover:text-white transition-colors text-xs font-medium"
+            >
+              <MessageCircle size={20} />
+              <span className="mt-1">Contacto</span>
+            </Link>
+          </nav>
         </div>
-      )}
-      
-      {!user && (
-        <div className="lg:hidden border-t border-white/10">
-          <div className="container mx-auto px-4 py-2">
-            <nav className="flex items-center justify-center space-x-6">
-              <Link 
-                to="/" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Inicio
-              </Link>
-              <Link 
-                to="/products" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Productos
-              </Link>
-              <Link 
-                to="/offers" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Ofertas
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
-              >
-                Contacto
-              </Link>
-            </nav>
-          </div>
-        </div>
-      )}
+      </div>
     </header>
   );
 };

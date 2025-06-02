@@ -199,7 +199,7 @@ const Login: React.FC = () => {
               <Link to="/register">
                 <Button 
                   variant="outline" 
-                  className="border-2 border-pharma-green text-pharma-green hover:bg-pharma-green hover:text-white font-semibold px-8 rounded-full transform hover:scale-105 transition-all"
+                  className="bg-white border-2 border-pharma-green text-pharma-green hover:bg-pharma-green hover:text-white font-semibold px-8 rounded-full transform hover:scale-105 transition-all"
                 >
                   Registrarse Gratis
                 </Button>

@@ -188,22 +188,22 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
               </p>
               
               {/* Additional Info */}
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                <div className="flex flex-col space-y-1">
                   <span className="text-gray-500">Presentación:</span>
-                  <span className="ml-2 font-medium">Tabletas/Cápsulas</span>
+                  <span className="font-medium text-gray-900">Tabletas/Cápsulas</span>
                 </div>
-                <div>
+                <div className="flex flex-col space-y-1">
                   <span className="text-gray-500">Concentración:</span>
-                  <span className="ml-2 font-medium">Según etiqueta</span>
+                  <span className="font-medium text-gray-900">Según etiqueta</span>
                 </div>
-                <div>
+                <div className="flex flex-col space-y-1">
                   <span className="text-gray-500">Laboratorio:</span>
-                  <span className="ml-2 font-medium">{product.brand}</span>
+                  <span className="font-medium text-gray-900">{product.brand}</span>
                 </div>
-                <div>
+                <div className="flex flex-col space-y-1">
                   <span className="text-gray-500">Registro:</span>
-                  <span className="ml-2 font-medium">INVIMA-2024</span>
+                  <span className="font-medium text-gray-900">INVIMA-2024</span>
                 </div>
               </div>
             </div>
