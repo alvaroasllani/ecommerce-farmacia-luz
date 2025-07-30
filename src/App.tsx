@@ -7,14 +7,19 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import Layout from "./components/Layout/Layout";
+import { ROUTES } from "./constants/routes";
+import { ROLES } from "./constants/roles";
 
 // Pages
+import BusinessSetup from "./pages/BusinessSetup";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Profile from "./pages/Profile";
+import Orders from "./pages/Orders";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,11 +40,11 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; roles?: string[] }> 
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
   if (roles.length > 0 && !roles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return <>{children}</>;
@@ -58,7 +63,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return <>{children}</>;
@@ -68,10 +73,13 @@ const AppRoutes = () => {
   return (
     <Layout>
       <Routes>
+        {/* Setup Route */}
+        <Route path={ROUTES.SETUP} element={<BusinessSetup />} />
+        
         {/* Public Routes */}
-        <Route path="/" element={<Home />} />
+        <Route path={ROUTES.HOME} element={<Home />} />
         <Route 
-          path="/login" 
+          path={ROUTES.LOGIN} 
           element={
             <PublicRoute>
               <Login />
@@ -79,7 +87,7 @@ const AppRoutes = () => {
           } 
         />
         <Route 
-          path="/register" 
+          path={ROUTES.REGISTER} 
           element={
             <PublicRoute>
               <Register />
@@ -89,26 +97,42 @@ const AppRoutes = () => {
 
         {/* Cliente Routes */}
         <Route 
-          path="/products" 
+          path={ROUTES.PRODUCTS} 
           element={
-            <ProtectedRoute roles={['cliente']}>
+            <ProtectedRoute roles={[ROLES.CLIENTE]}>
               <Products />
             </ProtectedRoute>
           } 
         />
         <Route 
-          path="/cart" 
+          path={ROUTES.CART} 
           element={
-            <ProtectedRoute roles={['cliente']}>
+            <ProtectedRoute roles={[ROLES.CLIENTE]}>
               <Cart />
             </ProtectedRoute>
           } 
         />
         <Route 
-          path="/checkout" 
+          path={ROUTES.CHECKOUT} 
           element={
-            <ProtectedRoute roles={['cliente']}>
+            <ProtectedRoute roles={[ROLES.CLIENTE]}>
               <Checkout />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path={ROUTES.PROFILE} 
+          element={
+            <ProtectedRoute roles={[ROLES.CLIENTE]}>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path={ROUTES.ORDERS} 
+          element={
+            <ProtectedRoute roles={[ROLES.CLIENTE]}>
+              <Orders />
             </ProtectedRoute>
           } 
         />

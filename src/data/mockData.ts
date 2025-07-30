@@ -1,5 +1,6 @@
 
 import { Product, Order, User } from '../types';
+import { PRODUCT_CATEGORIES, ORDER_STATUS, PAYMENT_METHODS } from '../constants/app';
 
 export const mockProducts: Product[] = [
   {
@@ -7,7 +8,7 @@ export const mockProducts: Product[] = [
     name: 'Paracetamol 500mg',
     description: 'Analgésico y antipirético para el alivio del dolor y la fiebre',
     price: 12.50,
-    category: 'Analgésicos',
+    category: PRODUCT_CATEGORIES[0], // 'Analgésicos'
     image: '/placeholder.svg',
     stock: 100,
     requiresPrescription: false,
@@ -18,7 +19,7 @@ export const mockProducts: Product[] = [
     name: 'Ibuprofeno 400mg',
     description: 'Antiinflamatorio no esteroideo para dolor e inflamación',
     price: 18.75,
-    category: 'Antiinflamatorios',
+    category: PRODUCT_CATEGORIES[1], // 'Antiinflamatorios'
     image: '/placeholder.svg',
     stock: 75,
     requiresPrescription: false,
@@ -29,7 +30,7 @@ export const mockProducts: Product[] = [
     name: 'Amoxicilina 500mg',
     description: 'Antibiótico de amplio espectro',
     price: 45.00,
-    category: 'Antibióticos',
+    category: PRODUCT_CATEGORIES[2], // 'Antibióticos'
     image: '/placeholder.svg',
     stock: 50,
     requiresPrescription: true,
@@ -40,7 +41,7 @@ export const mockProducts: Product[] = [
     name: 'Vitamina C 1000mg',
     description: 'Suplemento vitamínico para fortalecer el sistema inmunológico',
     price: 25.90,
-    category: 'Vitaminas',
+    category: PRODUCT_CATEGORIES[3], // 'Vitaminas'
     image: '/placeholder.svg',
     stock: 120,
     requiresPrescription: false,
@@ -51,7 +52,7 @@ export const mockProducts: Product[] = [
     name: 'Omeprazol 20mg',
     description: 'Inhibidor de la bomba de protones para problemas gástricos',
     price: 32.00,
-    category: 'Gastroenterología',
+    category: PRODUCT_CATEGORIES[4], // 'Gastroenterología'
     image: '/placeholder.svg',
     stock: 60,
     requiresPrescription: false,
@@ -62,7 +63,7 @@ export const mockProducts: Product[] = [
     name: 'Loratadina 10mg',
     description: 'Antihistamínico para alergias',
     price: 15.50,
-    category: 'Antihistamínicos',
+    category: PRODUCT_CATEGORIES[5], // 'Antihistamínicos'
     image: '/placeholder.svg',
     stock: 80,
     requiresPrescription: false,
@@ -80,8 +81,8 @@ export const mockOrders: Order[] = [
       { product: mockProducts[1], quantity: 1 }
     ],
     total: 43.75,
-    status: 'entregado',
-    paymentMethod: 'Tarjeta de crédito',
+    status: ORDER_STATUS.ENTREGADO,
+    paymentMethod: PAYMENT_METHODS[2], // 'Tarjeta de crédito'
     deliveryAddress: 'Av. Principal 123, Caracas',
     createdAt: new Date('2024-01-15')
   },
@@ -94,8 +95,8 @@ export const mockOrders: Order[] = [
       { product: mockProducts[4], quantity: 1 }
     ],
     total: 57.90,
-    status: 'pendiente',
-    paymentMethod: 'Efectivo',
+    status: ORDER_STATUS.PENDIENTE,
+    paymentMethod: PAYMENT_METHODS[0], // 'Efectivo'
     deliveryAddress: 'Calle 5 con Av. Universidad, Maracay',
     createdAt: new Date('2024-01-20')
   },
@@ -107,8 +108,8 @@ export const mockOrders: Order[] = [
       { product: mockProducts[2], quantity: 1 }
     ],
     total: 45.00,
-    status: 'pagado',
-    paymentMethod: 'Transferencia',
+    status: ORDER_STATUS.PAGADO,
+    paymentMethod: PAYMENT_METHODS[3], // 'Transferencia bancaria'
     deliveryAddress: 'Sector Los Pinos, Valencia',
     createdAt: new Date('2024-01-22')
   }
@@ -142,15 +143,5 @@ export const mockUsers: User[] = [
   }
 ];
 
-export const categories = [
-  'Analgésicos',
-  'Antiinflamatorios',
-  'Antibióticos',
-  'Vitaminas',
-  'Gastroenterología',
-  'Antihistamínicos',
-  'Dermatología',
-  'Cardiovascular',
-  'Respiratorio',
-  'Neurología'
-];
+// Export categories from constants
+export const categories = PRODUCT_CATEGORIES;
